@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 export default function App() {
+  const [equation, setEquation] = useState('');
+
   const buttons = [
     ['AC', '+/-', '%', '÷'],
     ['7', '8', '9', '×'],
@@ -10,11 +12,45 @@ export default function App() {
     ['','0', '.', '='],
   ];
 
+  
+
+  const decorativeSymbols: { [key: string]: string } = {
+    '×': '*',
+    '—': '-',
+    '÷': '/'
+  }
+  
+  function signTranslator(value: string) {
+    if (value in decorativeSymbols) {
+      return decorativeSymbols[value] 
+    } else {
+      return value
+    }
+  }
+
+  function handleButtonPress(value: string) {
+    if (value === 'AC') {
+      setEquation('');
+    } else if (value === '=') {
+      try {
+        let secretEquation = ''
+        for (let char of equation) {
+          secretEquation = secretEquation + signTranslator(char)
+        }
+        //console.log(secretEquation)
+        setEquation(eval(secretEquation).toString());
+      } catch {
+        setEquation('Error'); 
+      }
+    } else {
+      setEquation((prev: string) => prev + value);
+    }
+  }
 
   return (
     <View style={styles.container}>
       <View style={styles.display}>
-        <Text style={styles.displayText}></Text>
+        <Text style={styles.displayText}>{equation}</Text>
       </View> 
       <View style={styles.buttonContainer}> 
         {buttons.map((row, rowIndex) => (
@@ -27,6 +63,7 @@ export default function App() {
                   ['=', '+', '÷', '×', '—'].includes(button) && styles.orangeButton,
                   ['AC', '+/-', '%'].includes(button) && styles.lightButton,
                 ]}
+                onPress={() => handleButtonPress(button)}
               >
                 <Text style={styles.buttonText}>{button}</Text>                  
               </TouchableOpacity>
