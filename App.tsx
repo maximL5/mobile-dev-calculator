@@ -44,7 +44,12 @@ export default function App() {
           secretEquation = secretEquation + signTranslator(char)
         }
         //console.log(secretEquation)
-        setEquation(eval(secretEquation).toString());
+        if (equation.endsWith('%')) {
+          const num = parseFloat(secretEquation.slice(0, -1));
+          setEquation((num / 100).toString());
+        } else {
+          setEquation(eval(secretEquation).toString());
+        }
       } catch {
         setEquation('Error'); 
       }
