@@ -13,13 +13,13 @@ export default function App() {
   ];
 
   
-
   const decorativeSymbols: { [key: string]: string } = {
     '×': '*',
     '—': '-',
     '÷': '/'
   }
   
+  // translates the decorative symbols to the actual operators
   function signTranslator(value: string) {
     if (value in decorativeSymbols) {
       return decorativeSymbols[value] 
@@ -31,6 +31,12 @@ export default function App() {
   function handleButtonPress(value: string) {
     if (value === 'AC') {
       setEquation('');
+    } else if (value === '+/-') {
+      if (equation.startsWith('-')) {
+        setEquation(equation.substring(1));
+      } else {
+        setEquation('-' + equation);
+      }
     } else if (value === '=') {
       try {
         let secretEquation = ''
