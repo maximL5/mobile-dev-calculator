@@ -33,7 +33,7 @@ export default function App() {
       setEquation('');
     } else if (value === '+/-') {
       if (equation.startsWith('-')) {
-        setEquation(equation.substring(1));
+        setEquation(equation.slice(1));
       } else {
         setEquation('-' + equation);
       }
