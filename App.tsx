@@ -58,6 +58,10 @@ export default function App() {
     }
   }
 
+  function showAlert() {
+    alert('Button pressed');
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.display}>
@@ -82,6 +86,9 @@ export default function App() {
           </View>
         ))}
       </View>
+      <TouchableOpacity style={styles.alertButton} onPress={showAlert}>
+        <Text>Alert</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -130,6 +137,13 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 40,
     color: '#fff',
+  },
+  alertButton: {
+    backgroundColor: '#ff3b30',
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+    margin: 20,
   },
 });
 
